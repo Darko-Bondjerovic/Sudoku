@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Sudoku
+namespace SudokuNS
 {
     // https://gist.github.com/fabiosoft/b41067106bebf1498399f4eb9826e4de
 

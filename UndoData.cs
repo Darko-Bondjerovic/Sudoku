@@ -1,4 +1,4 @@
-﻿namespace Sudoku
+namespace SudokuNS
 {
     public enum What { number, user_guess, user_cand };
 

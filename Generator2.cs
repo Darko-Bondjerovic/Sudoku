@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using System.Text;
 // https://github.com/nilamsavani/SudokuGenerator
 // https://github.com/nilamsavani/SudokuGenerator/blob/master/SudokuGenerator/SudokuGenerator/Logic/Sudoku.cs
 
-namespace Sudoku
+namespace SudokuNS
 {    
     public class Generator2
     {

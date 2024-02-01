@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -8,11 +8,15 @@ using System.Windows.Forms;
 
 //https://sudoku.ironmonger.com/home/home.tpl <-- display puzzle difficulty! :)
 
-namespace Sudoku
+namespace SudokuNS
 {
     public class Sudoku
     {
-        internal static readonly int MAX_COUNTERS = 11;
+        public bool NumericalCandyPosition = true;
+
+        internal static readonly int MAX_COUNTERS = 9;
+
+        public Action<int> DoMarkField = (v) => { };
 
         #region Class Decelerations
 
@@ -22,10 +26,10 @@ namespace Sudoku
 
         private List<UndoData> undos = new List<UndoData>();
 
-        private HashSet<Pair>[,] pairs = new HashSet<Pair>[9, 9];
+        public HashSet<Pair>[,] pairs = new HashSet<Pair>[9, 9];
 
-        private List<int>[,] calc_candidates = new List<int>[9, 9];
-		private List<int>[,] user_candidates = new List<int>[9, 9];
+        public List<int>[,] calc_candidates = new List<int>[9, 9];
+        public List<int>[,] user_candidates = new List<int>[9, 9];
         private List<int>[,] user_guesses = new List<int>[9, 9];
 
 
@@ -47,8 +51,8 @@ namespace Sudoku
         private bool markPairs = false;
 
         // middle of the grid:
-        private int hitx = 4;
-        private int hity = 4;
+        public int hitx = 4;
+        public int hity = 4;
 
         private float realw;
         private float realx;
@@ -57,7 +61,7 @@ namespace Sudoku
         public Action RequestRepaint = () => { };
         public Action<string> DisplayInfo = (s) => { };
         public Action<string> DisplayError = (s) => { };
-        public Action<string[]> DisplayCounts = (s) => { };
+        public Action<SortedDictionary<int, int>> DisplayCounts = (s) => { };
         private bool skip_calc_cands = false;
         private bool single_found = false;
         private bool abort = false;
@@ -114,6 +118,7 @@ namespace Sudoku
             abort = false;
             RestoreState();
             CalculateCandidates();            
+            CountAndSumNumbers();
             RequestRepaint();
         }
 
@@ -244,6 +249,10 @@ namespace Sudoku
                     for (int k = 0; k < 3; k++)
                        FinderForSingle(k, j, i);                  
             
+            // remove all PairTriples (claiming, pointing)
+            var cla = new Claiming(this);
+            cla.RemoveAll(false);
+            cla.RemoveAll(true);
 
             FillOnlyPossibleValues();
         }
@@ -321,9 +330,9 @@ namespace Sudoku
             {
                 focused_number = value;
                 markPairs = false;
+                DoMarkField(value);
             }
         }
-
         private void EnterFocusedValueIntoEmptyField()
         {
             if ((focused_number > 0)
@@ -404,7 +413,7 @@ namespace Sudoku
 
             TryToEnterNumberIntoField(key);
 
-            ComputeErors();                
+            ComputeErors();            
 
             RequestRepaint();
         }
@@ -475,11 +484,11 @@ namespace Sudoku
                     enter_value_into_field(value);
 
                 if (RunFindSingles)
-                    FindAllSingles();
+                    FindAllSingles();                
             }
         }
         
-        private void HandleUserCandidates(int value)
+        public void HandleUserCandidates(int value)
         {
             var usrcands = user_candidates[hity, hitx];
             if (usrcands.Contains(value))
@@ -532,6 +541,8 @@ namespace Sudoku
             CalculateCandidates();
                 
             CheckPuzzleIsOk();
+
+            CountAndSumNumbers();
         }
 
         public void CheckPuzzleIsOk()
@@ -621,12 +632,39 @@ namespace Sudoku
             RemoveUserCandsFromCalcCands(j, i);
         }
 
-        private void RemoveUserCandsFromCalcCands(int j, int i)
+        public void RemoveUserCandsFromCalcCands(int j, int i)
         {
             // remove from calc candidates user candidates
             foreach (var item in user_candidates[j, i])
                 calc_candidates[j, i].Remove(item);
         }
+
+        private void CountAndSumNumbers()
+        {
+            // prebroj brojeve koliko ima:
+            var dict = new SortedDictionary<int, int>();
+            dict[0] = 0;
+
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 9; j++)
+                {
+                    var number = nums[j, i];
+                    if (number == 0) continue;
+                    if (dict.ContainsKey(number))
+                        dict[number]++;
+                    else
+                        dict[number] = 1;
+                }
+
+            // if we does not have some number in dict,
+            // we must add this number, to have all numbers 1-9
+            for (int k = 1; k < 10; k++)
+                if (!dict.ContainsKey(k))
+                    dict[k] = 0;            
+            
+            DisplayCounts(dict);            
+        }
+
 
         #region LoadGameFileOrString
 
@@ -737,7 +775,9 @@ namespace Sudoku
             FillGameBoardFromLine(game);
 
             ComputeErors();
-            CalculateCandidates();                          
+            CalculateCandidates();
+
+            CountAndSumNumbers();
 
             return true;
         }
@@ -788,10 +828,20 @@ namespace Sudoku
             Brush PairBrush = new Pen(Color.LightSkyBlue).Brush;
             SolidBrush SmallFont_BlackBrush = new SolidBrush(Color.FromArgb(200, Color.SlateGray));
             SolidBrush SmallFont_1Calc_RedBrush = new SolidBrush(Color.FromArgb(200, Color.Red));
-            SolidBrush SmallFont_Guess_BlueBrush = new SolidBrush(Color.FromArgb(200, Color.RoyalBlue));
+            SolidBrush SmallFont_Guess_BlueBrush = new SolidBrush(Color.FromArgb(200, Color.Blue));
             G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             G.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
             G.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
+            // calc how much numbers we are entered:
+            int[] numsSums = { 0,0,0,0,0,0,0,0,0,0 };
+            for (int i = 0; i < 9; i++)
+                for (int j = 0; j < 9; j++)
+                {
+                    var value = nums[i, j];
+                    if (value > 0)
+                        numsSums[value]++;
+                }       
 
             G.Clear(Background);
             Pen Border1 = new Pen(Color.Black, 3);
@@ -814,6 +864,7 @@ namespace Sudoku
             var realw9 = realw / 9;
             float error_circle_m = realw9 * 0.95f;
             Font F = new Font("Arial", realw / 18);
+            Font FBig = new Font("Arial", realw / 18, FontStyle.Bold);// | FontStyle.Underline);
             //Font Fsmall = new Font("Arial", realw / 72, FontStyle.Bold);
             Font FThird = new Font("Arial", realw / 38, FontStyle.Bold);
 
@@ -865,13 +916,13 @@ namespace Sudoku
                             else
                             {
                                 if (markPairs)
-                                {                                    
+                                {
                                     if (calc_candidates[index_j, index_i].Count() != 2)
                                         G.FillRectangle(PairBrush, ci, cj, realw9, realw9);
                                 }
                             }
 
-                            string num = nums[index_j, index_i] == 0 ? "" : nums[index_j, index_i].ToString();                            
+                            string num = nums[index_j, index_i] == 0 ? "" : nums[index_j, index_i].ToString();
 
                             if (fixes[index_j, index_i] == 1) FontColor = FontColor1;
                             if (fixes[index_j, index_i] == 0) FontColor = FontColor2;
@@ -880,17 +931,20 @@ namespace Sudoku
 
                             float num_x = ci + (realw9 - size_num.Width) / 2;
                             float num_y = cj + (realw9 - size_num.Height) / 2;
-                            
+
                             for (int sc = 0; sc < 3; sc++)
                             {
-                                third_x[sc] = SizeThirdDiffX + ci + sc*(realw9 / 3);
-                                third_y[sc] = cj + sc*(realw9 / 3);
+                                third_x[sc] = SizeThirdDiffX + ci + sc * (realw9 / 3);
+                                third_y[sc] = cj + sc * (realw9 / 3);
                             }
 
                             // put candidate numbers to match with numerical keyboard:
-                            temp = third_y[0];
-                            third_y[0] = third_y[2];
-                            third_y[2] = temp;
+                            if (NumericalCandyPosition)
+                            { 
+                                temp = third_y[0];
+                                third_y[0] = third_y[2];
+                                third_y[2] = temp;
+                            }
 
                             // Rectangles: x for number, y for hints and z for error circle
 
@@ -904,7 +958,12 @@ namespace Sudoku
                             G.TranslateTransform(num_centre_x, num_centre_y);
                             G.RotateTransform(-angle);
                             G.TranslateTransform(-num_centre_x, -num_centre_y);
-                            G.DrawString(num, F, FontColor, x);
+
+                            if (numsSums[nums[index_j, index_i]] == 9)
+                                G.DrawString(num, FBig, FontColor, x);
+                            else
+                                G.DrawString(num, F, FontColor, x);
+
                             G.TranslateTransform(num_centre_x, num_centre_y);
                             G.RotateTransform(+angle);
                             G.TranslateTransform(-num_centre_x, -num_centre_y);
@@ -1084,6 +1143,8 @@ namespace Sudoku
 
             if (RunFindSingles)
                 FindAllSingles();
+
+            CountAndSumNumbers();
         }
 
         private void SetAllFixesByValues()
@@ -1100,6 +1161,15 @@ namespace Sudoku
             if (move == 3 && hitx + 1 < 9) hitx++;
             if (move == 4 && hitx - 1 >= 0) hitx--;            
             RequestRepaint();
+        }
+
+        internal void RemovePairTriple(bool claim = true)
+        {
+            abort = false;
+            skip_calc_cands = true;
+            new Claiming(this).RemoveAll(claim);            
+            skip_calc_cands = false;
+            CalculateCandidates();
         }
 
         #endregion
