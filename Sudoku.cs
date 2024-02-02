@@ -17,6 +17,8 @@ namespace SudokuNS
         internal static readonly int MAX_COUNTERS = 9;
 
         public Action<int> DoMarkField = (v) => { };
+        
+        public Action<string> ConsoleWrite = (s) => { };
 
         #region Class Decelerations
 
@@ -62,8 +64,7 @@ namespace SudokuNS
         public Action<string> DisplayInfo = (s) => { };
         public Action<string> DisplayError = (s) => { };
         public Action<SortedDictionary<int, int>> DisplayCounts = (s) => { };
-        private bool skip_calc_cands = false;
-        private bool single_found = false;
+        private bool skip_calc_cands = false;        
         private bool abort = false;
 
         public Sudoku()
@@ -194,8 +195,11 @@ namespace SudokuNS
             if (value == 0) // current value is empty field
             {
                 // only 1 candidate left                    
-                if (calc_candidates[hity, hitx].Count == 1)                
+                if (calc_candidates[hity, hitx].Count == 1) 
+                {               
+                    ConsoleWrite($"Enter1Poss: [{hity},{hitx}] {calc_candidates[hity, hitx][0]}\n");
                     enter_value_into_field(calc_candidates[hity, hitx][0]);                
+                }
             }
         }
 
@@ -207,22 +211,31 @@ namespace SudokuNS
                 ShowCandidates = true;
         }        
 
-        private void FinderForSingle(int k, int j, int i)
+        private bool FinderForSingle(int kind, int j, int i)
         { 
+            // try to find by row/col/box, did we actualy 
+            // have only 1 candidate in j,i for these fields:
+            
             var find = new List<int>();
 
-            foreach (var p in pairs[j, i])
-                if (p.kind == k)
-                    find.AddRange(calc_candidates[p.j, p.i]);
-
+            for (int k = 0; k < 3; k++)
+                foreach (var p in pairs[j, i])
+                    if (p.kind == kind)
+                        find.AddRange(calc_candidates[p.j, p.i]);
+            
             var diff = calc_candidates[j, i]
                 .Except(find.Distinct()).ToList();
-
+                
             if (diff.Count == 1) // one number remain
-            {
+            {   
+                ConsoleWrite($"{kind} [{j},{i}] diff: {string.Join(",", diff)}\n");
+                
                 calc_candidates[j, i] = new List<int>(diff);
-                single_found = true;
+                
+                return true;
             }
+            
+            return false;
         }
 
         public void FindAllSingles()
@@ -231,30 +244,50 @@ namespace SudokuNS
 
             if (ComputeErors() > 0)
                 return;
+                        
+            abort = false;
+            
+            var cla = new Claiming(this);
+            cla.ConsoleWrite = this.ConsoleWrite;
 
-            do  
-                FindSingleNumbers();            
-            while (single_found);                
+            cla.RemoveAll(false);
+            cla.RemoveAll(true);
+            
+            CalculateCandidates();
+            
+            while (FindSingleNumbers())
+            {
+                cla.RemoveAll(false);
+                cla.RemoveAll(true);
+                
+                FillOnlyPossibleValues();
+            }
             
             RequestRepaint();
         }
 
-        internal void FindSingleNumbers()
+        internal bool FindSingleNumbers()
         {
-            single_found = false;
-            abort = false;
-
+            var result = false;
+            
             for (int j = 0; j < 9; j++)
                 for (int i = 0; i < 9; i++)
-                    for (int k = 0; k < 3; k++)
-                       FinderForSingle(k, j, i);                  
-            
-            // remove all PairTriples (claiming, pointing)
-            var cla = new Claiming(this);
-            cla.RemoveAll(false);
-            cla.RemoveAll(true);
+                {
+                    
+                    if (calc_candidates[j,i].Count == 1) 
+                    {
+                        // we already have 1 red number
+                        ConsoleWrite($"RED -> [{j},{i}] calc: {string.Join(",", calc_candidates[j,i])}\n");
+                        result |= true;
+                        continue;
+                    }
+                    
+                    // check every row/col/box
+                    for(int k=0; k<3; k++)
+                        result |= FinderForSingle(k, j, i); 
+               }
 
-            FillOnlyPossibleValues();
+            return result;
         }
 
         public void MarkAllPairsGuesses()
@@ -346,7 +379,7 @@ namespace SudokuNS
         private void Enter1PossValueIntoEmptyField(int j, int i)
         {
             var clc = calc_candidates[j, i];
-
+            
             if (clc.Count == 1)
             {
                 var x = hitx;
@@ -374,8 +407,8 @@ namespace SudokuNS
                     Enter1PossValueIntoEmptyField(j, i);                
 
             skip_calc_cands = false;
-
-            CalculateCandidates();
+            
+            this.CalculateCandidates();
         }
 
         internal void LockNumbers()
@@ -551,7 +584,6 @@ namespace SudokuNS
 
             if (CalculateSolution() == null)
             {
-                single_found = false;
                 ComputeErors();
                 RequestRepaint();
                 abort = true;
@@ -610,6 +642,8 @@ namespace SudokuNS
             if (skip_calc_cands)
                 return;
 
+            ConsoleWrite("Call calculate candidates!\n");
+            
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                    recalculate_candidates(j, i, nums[j, i]);                                  

@@ -4,7 +4,7 @@
   <Files>
     <File>
       <make>true</make>
-      <show>false</show>
+      <show>true</show>
       <full>..\Sudoku.cs</full>
     </File>
     <File>
@@ -46,6 +46,16 @@
       <make>true</make>
       <show>true</show>
       <full>..\Claiming.cs</full>
+    </File>
+    <File>
+      <make>true</make>
+      <show>true</show>
+      <full>FindAllTests.cs</full>
+    </File>
+    <File>
+      <make>true</make>
+      <show>true</show>
+      <full>ClmPntTests.cs</full>
     </File>
   </Files>
 </RapidTDD>

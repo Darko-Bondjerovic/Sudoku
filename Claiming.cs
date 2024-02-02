@@ -189,6 +189,8 @@ namespace SudokuNS
 
         public void RemoveAll(bool claim = true)
         {
+            ConsoleWrite($"=== Claiming: {claim} ===");
+            
             var oldhitx = su.hitx;
             var oldhity = su.hity;
             
