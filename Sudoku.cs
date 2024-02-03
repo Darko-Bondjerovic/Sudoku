@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //https://sudoku.ironmonger.com/home/home.tpl <-- display puzzle difficulty! :)
@@ -251,8 +252,7 @@ namespace SudokuNS
             cla.ConsoleWrite = this.ConsoleWrite;
 
             cla.RemoveAll(false);
-            cla.RemoveAll(true);
-            
+            cla.RemoveAll(true);            
             CalculateCandidates();
             
             while (FindSingleNumbers())
@@ -578,22 +578,63 @@ namespace SudokuNS
             CountAndSumNumbers();
         }
 
+        public Dictionary<string, string> CalculateSolutionThread()
+        {
+            string TargetOfInvocation = "Exception has been thrown by the target of an invocation";
+
+            var vaittime = 6;
+            var task = Task.Run(() =>
+            {
+                try
+                {
+                    return CalculateSolution();
+                }
+                catch (Exception e)
+                {
+                    var result = "FAIL: \n" + e.Message;
+
+                    if (e.Message.Contains(TargetOfInvocation))
+                        result += "\n\n" + e.InnerException.Message;
+
+                    return new Dictionary<string, string>() { { "error", result } };
+                }
+            });
+
+            bool onTime = task.Wait(TimeSpan.FromSeconds(vaittime));
+
+            if (onTime)
+                return task.Result;
+            else
+            {
+                var result = $"FAIL TO FIND IF SOLUTION EXISTS, AFTER {vaittime} SEC :(";
+                return new Dictionary<string, string>() { {"error", result } };
+            }       
+        }
+
         public void CheckPuzzleIsOk()
         {
             if (abort) return;
 
-            if (CalculateSolution() == null)
+            var solution = CalculateSolutionThread();
+
+            if (solution == null)
             {
                 ComputeErors();
                 RequestRepaint();
                 abort = true;
-                DisplayError("PUZZLE DOES NOT HAVE SOLUTION!");
+                DisplayError("SUDOKU DOES NOT HAVE SOLUTION!");
+                return;                
+            }
+
+            if (solution.Count == 1)
+            {
+                DisplayError(solution["error"]);
                 return;
             }
 
             if (IsSolved())
             {                
-                DisplayInfo("PUZZLE IS SOLVED!!!");
+                //DisplayInfo("PUZZLE IS SOLVED!!!");
                 focused_number = 0;
                 markPairs = false;
             }
@@ -1124,20 +1165,26 @@ namespace SudokuNS
                 return;
             }
 
-            var solution = CalculateSolution();
+            var solution = CalculateSolutionThread();
+
             if (solution == null)
             {
                 DisplayError("This sudoku does not have solution :(");
                 return;
             }
-            else
+
+            if (solution.Count == 1)
             {
-                DialogResult answer = MessageBox.Show(
-                    "Puzzle have solution!\nApply solution?",
-                      "Sudoku", MessageBoxButtons.YesNo);
-                if (answer == DialogResult.No)
-                    return;
+                DisplayError(solution["error"]);
+                return;
             }
+
+            DialogResult answer = MessageBox.Show(
+            "Puzzle have solution!\nApply solution?",
+                "Sudoku", MessageBoxButtons.YesNo);
+
+            if (answer == DialogResult.No)
+                return;           
 
             var res = "";
             foreach (var item in solution)

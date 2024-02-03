@@ -38,6 +38,7 @@
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.flipCandidatesPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lockNumbersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -49,13 +50,6 @@
             this.showPossibleValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.markAllPairsGuessesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPairsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.fillOnlyPossibleValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findSingleNumbersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removePointingPairTripleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeClaimingPairTripleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-            this.AutomFinder = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -70,8 +64,13 @@
             this.circularProgressBar3 = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar2 = new CircularProgressBar.CircularProgressBar();
             this.circularProgressBar1 = new CircularProgressBar.CircularProgressBar();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.flipCandidatesPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.AutomFinder = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.pnlNumbers.SuspendLayout();
@@ -97,6 +96,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.toolStripMenuItem7,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -135,14 +135,14 @@
             // solvePuzzleToolStripMenuItem
             // 
             this.solvePuzzleToolStripMenuItem.Name = "solvePuzzleToolStripMenuItem";
-            this.solvePuzzleToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
+            this.solvePuzzleToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.solvePuzzleToolStripMenuItem.Text = "Solve puzzle...";
             this.solvePuzzleToolStripMenuItem.Click += new System.EventHandler(this.solvePuzzleToolStripMenuItem_Click_1);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(190, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(200, 6);
             // 
             // openToolStripMenuItem1
             // 
@@ -150,7 +150,7 @@
             this.openToolStripMenuItem1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
             this.openToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(193, 26);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(203, 26);
             this.openToolStripMenuItem1.Text = "&Open...";
             this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
             // 
@@ -160,20 +160,27 @@
             this.saveToolStripMenuItem1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(193, 26);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(203, 26);
             this.saveToolStripMenuItem1.Text = "&Save As...";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+            // 
+            // flipCandidatesPositionToolStripMenuItem
+            // 
+            this.flipCandidatesPositionToolStripMenuItem.Name = "flipCandidatesPositionToolStripMenuItem";
+            this.flipCandidatesPositionToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
+            this.flipCandidatesPositionToolStripMenuItem.Text = "Flip candidates position";
+            this.flipCandidatesPositionToolStripMenuItem.Click += new System.EventHandler(this.flipCandidatesPositionToolStripMenuItem_Click);
             // 
             // lockNumbersToolStripMenuItem
             // 
             this.lockNumbersToolStripMenuItem.Name = "lockNumbersToolStripMenuItem";
             this.lockNumbersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.lockNumbersToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
+            this.lockNumbersToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.lockNumbersToolStripMenuItem.Text = "Lock numbers";
             this.lockNumbersToolStripMenuItem.Click += new System.EventHandler(this.lockNumbersToolStripMenuItem_Click_1);
             // 
@@ -188,12 +195,12 @@
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(190, 6);
+            this.toolStripSeparator.Size = new System.Drawing.Size(200, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(193, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -205,14 +212,7 @@
             this.toolStripMenuItem1,
             this.showPossibleValuesToolStripMenuItem,
             this.markAllPairsGuessesToolStripMenuItem,
-            this.showPairsToolStripMenuItem,
-            this.toolStripMenuItem3,
-            this.fillOnlyPossibleValuesToolStripMenuItem,
-            this.findSingleNumbersToolStripMenuItem,
-            this.removePointingPairTripleToolStripMenuItem,
-            this.removeClaimingPairTripleToolStripMenuItem,
-            this.toolStripMenuItem6,
-            this.AutomFinder});
+            this.showPairsToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -223,7 +223,7 @@
             this.copyToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.copyToolStripMenuItem.Text = "&Copy numbers";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -233,20 +233,20 @@
             this.pasteToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.pasteToolStripMenuItem.Text = "&Paste numbers";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(246, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(225, 6);
             // 
             // showPossibleValuesToolStripMenuItem
             // 
             this.showPossibleValuesToolStripMenuItem.Name = "showPossibleValuesToolStripMenuItem";
             this.showPossibleValuesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.showPossibleValuesToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
+            this.showPossibleValuesToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.showPossibleValuesToolStripMenuItem.Text = "Show / hide candidates";
             this.showPossibleValuesToolStripMenuItem.Click += new System.EventHandler(this.showPossibleValuesToolStripMenuItem_Click);
             // 
@@ -254,7 +254,7 @@
             // 
             this.markAllPairsGuessesToolStripMenuItem.Name = "markAllPairsGuessesToolStripMenuItem";
             this.markAllPairsGuessesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.markAllPairsGuessesToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
+            this.markAllPairsGuessesToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.markAllPairsGuessesToolStripMenuItem.Text = "Mark all pairs guesses";
             this.markAllPairsGuessesToolStripMenuItem.Click += new System.EventHandler(this.markAllPairsGuessesToolStripMenuItem_Click);
             // 
@@ -262,65 +262,14 @@
             // 
             this.showPairsToolStripMenuItem.Name = "showPairsToolStripMenuItem";
             this.showPairsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.showPairsToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
+            this.showPairsToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.showPairsToolStripMenuItem.Text = "Show pairs of candidates";
             this.showPairsToolStripMenuItem.Click += new System.EventHandler(this.showPairsToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(246, 6);
-            // 
-            // fillOnlyPossibleValuesToolStripMenuItem
-            // 
-            this.fillOnlyPossibleValuesToolStripMenuItem.Name = "fillOnlyPossibleValuesToolStripMenuItem";
-            this.fillOnlyPossibleValuesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.fillOnlyPossibleValuesToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
-            this.fillOnlyPossibleValuesToolStripMenuItem.Text = "Fill only possible values";
-            this.fillOnlyPossibleValuesToolStripMenuItem.Click += new System.EventHandler(this.fillOnlyPossibleValuesToolStripMenuItem_Click);
-            // 
-            // findSingleNumbersToolStripMenuItem
-            // 
-            this.findSingleNumbersToolStripMenuItem.Name = "findSingleNumbersToolStripMenuItem";
-            this.findSingleNumbersToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.findSingleNumbersToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
-            this.findSingleNumbersToolStripMenuItem.Text = "Fill single numbers";
-            this.findSingleNumbersToolStripMenuItem.Click += new System.EventHandler(this.findSingleNumbersToolStripMenuItem_Click);
-            // 
-            // removePointingPairTripleToolStripMenuItem
-            // 
-            this.removePointingPairTripleToolStripMenuItem.Name = "removePointingPairTripleToolStripMenuItem";
-            this.removePointingPairTripleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.removePointingPairTripleToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
-            this.removePointingPairTripleToolStripMenuItem.Text = "Remove Pointing Pair/Triple";
-            this.removePointingPairTripleToolStripMenuItem.Click += new System.EventHandler(this.removePointingPairTripleToolStripMenuItem_Click);
-            // 
-            // removeClaimingPairTripleToolStripMenuItem
-            // 
-            this.removeClaimingPairTripleToolStripMenuItem.Name = "removeClaimingPairTripleToolStripMenuItem";
-            this.removeClaimingPairTripleToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.removeClaimingPairTripleToolStripMenuItem.Size = new System.Drawing.Size(249, 26);
-            this.removeClaimingPairTripleToolStripMenuItem.Text = "Remove Claiming Pair/Triple";
-            this.removeClaimingPairTripleToolStripMenuItem.Click += new System.EventHandler(this.removeClaimingPairTripleToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(246, 6);
-            // 
-            // AutomFinder
-            // 
-            this.AutomFinder.CheckOnClick = true;
-            this.AutomFinder.Name = "AutomFinder";
-            this.AutomFinder.Size = new System.Drawing.Size(249, 26);
-            this.AutomFinder.Text = "Autom. fill Singles, Pair/Triple";
-            this.AutomFinder.Click += new System.EventHandler(this.automFillSinglesAndPairTripleToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem,
-            this.toolStripMenuItem5});
+            this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -674,17 +623,63 @@
             this.circularProgressBar1.TextMargin = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.circularProgressBar1.Value = 9;
             // 
-            // toolStripMenuItem5
+            // toolStripMenuItem7
             // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem7.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem13,
+            this.toolStripMenuItem14,
+            this.toolStripMenuItem15,
+            this.toolStripMenuItem16,
+            this.toolStripSeparator4,
+            this.AutomFinder});
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(59, 20);
+            this.toolStripMenuItem7.Text = "&Resolve";
             // 
-            // flipCandidatesPositionToolStripMenuItem
+            // toolStripMenuItem13
             // 
-            this.flipCandidatesPositionToolStripMenuItem.Name = "flipCandidatesPositionToolStripMenuItem";
-            this.flipCandidatesPositionToolStripMenuItem.Size = new System.Drawing.Size(203, 26);
-            this.flipCandidatesPositionToolStripMenuItem.Text = "Flip candidates position";
-            this.flipCandidatesPositionToolStripMenuItem.Click += new System.EventHandler(this.flipCandidatesPositionToolStripMenuItem_Click);
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(245, 22);
+            this.toolStripMenuItem13.Text = "Fill only possible values";
+            this.toolStripMenuItem13.Click += new System.EventHandler(this.fillOnlyPossibleValuesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem14
+            // 
+            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
+            this.toolStripMenuItem14.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(245, 22);
+            this.toolStripMenuItem14.Text = "Fill single numbers";
+            this.toolStripMenuItem14.Click += new System.EventHandler(this.findSingleNumbersToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem15
+            // 
+            this.toolStripMenuItem15.Name = "toolStripMenuItem15";
+            this.toolStripMenuItem15.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(245, 22);
+            this.toolStripMenuItem15.Text = "Remove Pointing Pair/Triple";
+            this.toolStripMenuItem15.Click += new System.EventHandler(this.removePointingPairTripleToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem16
+            // 
+            this.toolStripMenuItem16.Name = "toolStripMenuItem16";
+            this.toolStripMenuItem16.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.toolStripMenuItem16.Size = new System.Drawing.Size(245, 22);
+            this.toolStripMenuItem16.Text = "Remove Claiming Pair/Triple";
+            this.toolStripMenuItem16.Click += new System.EventHandler(this.removeClaimingPairTripleToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(242, 6);
+            // 
+            // AutomFinder
+            // 
+            this.AutomFinder.CheckOnClick = true;
+            this.AutomFinder.Name = "AutomFinder";
+            this.AutomFinder.Size = new System.Drawing.Size(245, 22);
+            this.AutomFinder.Text = "Autom. find and fill F5,F6,F7,F8";
+            this.AutomFinder.Click += new System.EventHandler(this.automFillSinglesAndPairTripleToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -731,15 +726,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem showPossibleValuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem fillOnlyPossibleValuesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem findSingleNumbersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPairsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem solvePuzzleToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem lockNumbersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem markAllPairsGuessesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeClaimingPairTripleToolStripMenuItem;
         private System.Windows.Forms.Panel pnlNumbers;
         private CircularProgressBar.CircularProgressBar circularProgressBar9;
         private CircularProgressBar.CircularProgressBar circularProgressBar8;
@@ -750,11 +741,14 @@
         private CircularProgressBar.CircularProgressBar circularProgressBar3;
         private CircularProgressBar.CircularProgressBar circularProgressBar2;
         private CircularProgressBar.CircularProgressBar circularProgressBar1;
-        private System.Windows.Forms.ToolStripMenuItem removePointingPairTripleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
-        private System.Windows.Forms.ToolStripMenuItem AutomFinder;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem flipCandidatesPositionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem16;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem AutomFinder;
     }
 }
 

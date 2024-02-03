@@ -297,6 +297,9 @@ namespace SudokuNS
         {
             if (sender == AutomFinder)
                 sudoku.RunFindSingles = AutomFinder.Checked;
+
+            if (sudoku.RunFindSingles)
+                sudoku.FindAllSingles();
         }
 
         private void flipCandidatesPositionToolStripMenuItem_Click(object sender, EventArgs e)
