@@ -172,7 +172,7 @@ namespace SudokuNS
             var text = Clipboard.GetText();
             if (!sudoku.SetGameString(text))
                 DisplayErrorBox("The clipboard does not contain a valid puzzle.\n" + text);
-            else if (sudoku.RunFindSingles)
+            else 
                 sudoku.FindAllSingles();
 
             RepaintPictureBox();
@@ -297,9 +297,8 @@ namespace SudokuNS
         {
             if (sender == AutomFinder)
                 sudoku.RunFindSingles = AutomFinder.Checked;
-
-            if (sudoku.RunFindSingles)
-                sudoku.FindAllSingles();
+            
+            sudoku.FindAllSingles();
         }
 
         private void flipCandidatesPositionToolStripMenuItem_Click(object sender, EventArgs e)

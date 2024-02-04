@@ -169,25 +169,20 @@ namespace SudokuNS
 
                 if (Control.ModifierKeys == Keys.Control)
                 {
-                    HandleUserGuesses(focused_number);
-                    return;
-                }
-
-                if (Control.ModifierKeys == Keys.Alt)
+                    HandleUserGuesses(focused_number);                    
+                } 
+                else if (Control.ModifierKeys == Keys.Alt)
                 {
-                    HandleUserCandidates(focused_number);
-                    if (RunFindSingles)
-                        FindAllSingles();
-                    return;
+                    HandleUserCandidates(focused_number);                                        
                 }
-
-                MarkFieldsBy(value);
-
-                EnterFocusedValueIntoEmptyField();
-            }
+                else
+                {
+                    MarkFieldsBy(value);
+                    EnterFocusedValueIntoEmptyField();
+                }               
+            }            
             
-            if (RunFindSingles)
-                FindAllSingles();
+            FindAllSingles();
         }
 
         private void Enter1PossValueIntoEmptyField(int value)
@@ -241,6 +236,9 @@ namespace SudokuNS
 
         public void FindAllSingles()
         {
+            if (!RunFindSingles)
+                return;
+
             if (abort) return;
 
             if (ComputeErors() > 0)
@@ -257,6 +255,8 @@ namespace SudokuNS
             
             while (FindSingleNumbers())
             {
+                if (abort) return;
+
                 cla.RemoveAll(false);
                 cla.RemoveAll(true);
                 
@@ -516,8 +516,7 @@ namespace SudokuNS
                 } else 
                     enter_value_into_field(value);
 
-                if (RunFindSingles)
-                    FindAllSingles();                
+                FindAllSingles();                
             }
         }
         
@@ -1222,8 +1221,7 @@ namespace SudokuNS
             SetGameString(puzz);
             LockNumbers();
 
-            if (RunFindSingles)
-                FindAllSingles();
+            FindAllSingles();
 
             CountAndSumNumbers();
         }
